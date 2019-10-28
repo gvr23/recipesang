@@ -1,0 +1,13 @@
+<div class="columns">
+  <div class="column is-4">
+    <button
+      class="button is-success"
+      (click)="onNewRecipe()"
+    >New Recipe</button>
+    <hr />
+    <app-recipe-list></app-recipe-list>
+  </div>
+  <div class="column is-7">
+    <router-outlet></router-outlet>
+  </div>
+</div>

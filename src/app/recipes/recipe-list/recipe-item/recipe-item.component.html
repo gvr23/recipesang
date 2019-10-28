@@ -1,0 +1,21 @@
+<div
+  class="box"
+  style="display: flex; margin-bottom: 1%; cursor: pointer; outline: none; flex: 1"
+  [routerLink]="selected"
+  routerLinkActive="notification is-link"
+>
+  <article class="media" style="flex: 1">
+    <div class="media-content">
+      <div class="content">
+        <p class="title is-4">{{ recipe.name }}</p>
+        <p class="subtitle is-6" line>{{ recipe.description }}</p>
+      </div>
+    </div>
+
+    <div class="media-right" style="align-self: center">
+      <figure class="image is-64x64">
+        <img src="{{ recipe.imagePath }}" alt="{{ recipe.name }}">
+      </figure>
+    </div>
+  </article>
+</div>

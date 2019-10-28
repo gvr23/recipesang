@@ -1,0 +1,10 @@
+<app-shopping-edit></app-shopping-edit>
+<hr />
+<div
+  class="card"
+  style="padding: 1%; cursor: pointer;"
+  *ngFor="let ingredient of ingredients; let i = index"
+  (click)="onDeleteItemClicked(i)"
+>
+  <p>{{ ingredient.name }} ({{ ingredient.quantity }})</p>
+</div>

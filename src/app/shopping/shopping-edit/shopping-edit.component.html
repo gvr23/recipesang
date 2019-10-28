@@ -1,0 +1,30 @@
+<div class="columns">
+  <div class="column is-5">
+    <div class="field">
+      <label class="label">Name</label>
+      <div class="control">
+        <input #ingredientName class="input" type="text" placeholder="e.g Potatoes" />
+      </div>
+    </div>
+  </div>
+  <div class="column is-1">
+    <div class="field">
+      <label class="label">Quantity</label>
+      <div class="control">
+        <input #ingredientQuantity class="input" type="number" min="0" placeholder="e.g. 1"/>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="field is-grouped">
+  <div class="control">
+    <button class="button is-success" (click)="onAddItem()">Add</button>
+  </div>
+  <div class="control">
+    <button class="button is-danger" (click)="onDeleteLastItem()">Delete</button>
+  </div>
+  <div class="control">
+    <button class="button is-link" (click)="onClearInputs()">Clear</button>
+  </div>
+</div>
