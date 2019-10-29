@@ -19,7 +19,7 @@ export class ShoppingComponent implements OnInit, OnDestroy {
     // tslint:disable-next-line:max-line-length
     this.ingredientsSubscription = this.ingredientService.ingredientUpdatedSubject.subscribe((ingredientsUpdated: Ingredient[]) => this.ingredients = ingredientsUpdated);
   }
-  onDeleteItemClicked = (index: number) => this.ingredientService.deleteIngredientClicked(index);
-
+  /*onDeleteItemClicked = (index: number) => this.ingredientService.deleteIngredientClicked(index);*/
+  onEdit  = (index: number) => this.ingredientService.editingStarted.next(index);
   ngOnDestroy(): void { this.ingredientsSubscription.unsubscribe(); }
 }

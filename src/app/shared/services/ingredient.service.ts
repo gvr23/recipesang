@@ -10,17 +10,19 @@ export class IngredientService {
   ];
   /*ingredientsUpdateEmitter = new EventEmitter<Ingredient[]>();*/
   ingredientUpdatedSubject = new Subject<Ingredient[]>();
+  editingStarted = new Subject<number>();
 
   getIngredients = () => this.ingredients.slice();
+  getIngredient = (index: number) => this.ingredients[index];
   addIngredient = (ingredient: Ingredient) => {
     this.ingredients.push(ingredient);
-    this.ingredientUpdatedSubject.next(this.ingredients.slice());
-  }
-  deleteIngredient = () => {
-    this.ingredients.splice(this.ingredients.length - 1, 1);
     this.ingredientUpdatedSubject.next(this.getIngredients());
   }
-  deleteIngredientClicked = (index: number) => {
+  editIngredient = (index: number, ingredient: Ingredient) => {
+    this.ingredients[index] = ingredient;
+    this.ingredientUpdatedSubject.next(this.getIngredients());
+  }
+  deleteIngredient = (index: number) => {
     this.ingredients.splice(index, 1);
     this.ingredientUpdatedSubject.next(this.getIngredients());
   }
