@@ -12,7 +12,7 @@
       <button
         class="button is-danger"
         type="button"
-        (click)="onClear()"
+        (click)="onCancel()"
       >Cancel
       </button>
     </div>
@@ -103,6 +103,7 @@
             <button
               class="button is-danger"
               type="button"
+              (click)="onDeleteIngredient(i)"
             >X</button>
           </div>
         </div>

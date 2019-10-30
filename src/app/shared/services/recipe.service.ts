@@ -48,5 +48,11 @@ export class RecipeService {
     this.recipes.splice(index, 1);
     this.getRecipesEmitter.next(this.getRecipes());
   }
+  /*deleteRecipeIngredient = (indexRecipe: number, indexIngredient: number) => {
+    console.log(indexRecipe, ' is the indexRecipe');
+    const recipe = this.getRecipe(indexRecipe);
+    recipe.ingredients.splice(indexIngredient, 1);
+    this.getRecipesEmitter.next(this.getRecipes());
+  }*/
   addToShoppingList = (ingredients: Ingredient[]) => this.ingredientService.addIngredients(ingredients);
 }
