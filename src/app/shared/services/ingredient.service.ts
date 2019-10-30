@@ -8,7 +8,6 @@ export class IngredientService {
     new Ingredient('Apple', 5),
     new Ingredient('Tomatoe', 2)
   ];
-  /*ingredientsUpdateEmitter = new EventEmitter<Ingredient[]>();*/
   ingredientUpdatedSubject = new Subject<Ingredient[]>();
   editingStarted = new Subject<number>();
 
@@ -16,6 +15,10 @@ export class IngredientService {
   getIngredient = (index: number) => this.ingredients[index];
   addIngredient = (ingredient: Ingredient) => {
     this.ingredients.push(ingredient);
+    this.ingredientUpdatedSubject.next(this.getIngredients());
+  }
+  addIngredients = (ingredients: Ingredient[]) => {
+    this.ingredients = [...this.ingredients, ...ingredients];
     this.ingredientUpdatedSubject.next(this.getIngredients());
   }
   editIngredient = (index: number, ingredient: Ingredient) => {

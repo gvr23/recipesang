@@ -12,7 +12,7 @@ import { RecipeStartComponent } from './recipes/recipe-start/recipe-start.compon
 import { RecipeEditComponent } from './recipes/recipe-edit/recipe-edit.component';
 import { RecipeItemComponent } from './recipes/recipe-list/recipe-item/recipe-item.component';
 import {AppRoutes} from './routes.module';
-import {FormsModule} from '@angular/forms';
+import {FormsModule, ReactiveFormsModule} from '@angular/forms';
 import {IngredientService} from './shared/services/ingredient.service';
 import {RecipeService} from './shared/services/recipe.service';
 import {DropDirective} from './shared/directives/drop.directive';
@@ -34,7 +34,8 @@ import {DropDirective} from './shared/directives/drop.directive';
   imports: [
     BrowserModule,
     AppRoutes,
-    FormsModule
+    FormsModule,
+    ReactiveFormsModule
   ],
   providers: [IngredientService, RecipeService],
   bootstrap: [AppComponent]

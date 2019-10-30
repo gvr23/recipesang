@@ -1,1 +1,113 @@
-<p>recipe-edit works!</p>
+<form [formGroup]="recipeForm" (ngSubmit)="onSubmit()">
+  <div class="field is-grouped">
+    <div class="control">
+      <button
+        class="button is-success"
+        type="submit"
+        [disabled]="!recipeForm.valid"
+      >Save
+      </button>
+    </div>
+    <div class="control">
+      <button
+        class="button is-danger"
+        type="button"
+        (click)="onClear()"
+      >Cancel
+      </button>
+    </div>
+  </div>
+
+  <div class="field">
+    <label class="label">Name</label>
+    <div class="control">
+      <input
+        type="text"
+        class="input"
+        formControlName="recipeName"
+      />
+    </div>
+  </div>
+
+  <div class="field">
+    <label class="label">Image URL</label>
+    <div class="control">
+      <input
+        #imagePath
+        type="text"
+        class="input"
+        formControlName="recipeImagePath"
+      />
+    </div>
+  </div>
+
+  <img [src]="imagePath.value" />
+
+  <div class="field">
+    <label class="label">Description</label>
+    <div class="control">
+      <textarea
+        class="textarea"
+        formControlName="recipeDescription"
+      ></textarea>
+    </div>
+  </div>
+
+  <label class="label" style="text-decoration: underline">Ingredients</label>
+  <div class="field">
+    <div class="control">
+      <button
+        class="button is-success"
+        type="button"
+        (click)="onAddIngredient()"
+      >Add</button>
+    </div>
+  </div>
+
+  <div formArrayName="recipeIngredients">
+    <div
+      *ngFor="let ingredient of getIngredients().controls; let i = index;"
+      [formGroupName]="i"
+      class="columns level"
+    >
+
+      <div class="column is-9">
+        <div class="field">
+          <label class="label">Name</label>
+          <div class="control">
+            <input
+              formControlName="name"
+              type="text"
+              class="input"
+            />
+          </div>
+        </div>
+      </div>
+
+      <div class="column is-2">
+        <div class="field">
+          <label class="label">Quantity</label>
+          <div class="control">
+            <input
+              formControlName="quantity"
+              type="number"
+              class="input"
+            />
+          </div>
+        </div>
+      </div>
+
+      <div class="column is-1" style=" align-self: flex-end">
+        <div class="field">
+          <div class="control">
+            <button
+              class="button is-danger"
+              type="button"
+            >X</button>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</form>

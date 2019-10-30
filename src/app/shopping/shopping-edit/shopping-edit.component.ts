@@ -16,10 +16,16 @@ export class ShoppingEditComponent implements OnInit, OnDestroy {
   editingIngredient: Ingredient;
   ingredientSubscription: Subscription;
 
-  constructor(private ingredientService: IngredientService) {
-  }
+  constructor(private ingredientService: IngredientService) {}
 
   ngOnInit() {
+    this.onIngredientEditSubscription();
+  }
+  ngOnDestroy(): void {
+    this.ingredientSubscription.unsubscribe();
+  }
+
+  onIngredientEditSubscription = () => {
     this.ingredientSubscription = this.ingredientService.editingStarted.subscribe((num: number) => {
       this.editingSelected = num;
       this.editingIngredient = this.ingredientService.getIngredient(this.editingSelected);
@@ -32,7 +38,6 @@ export class ShoppingEditComponent implements OnInit, OnDestroy {
       }
     });
   }
-
   onAddItem = () => {
     /*const ingredient = new Ingredient(this.ingredientName.nativeElement.value, +this.ingredientQuantity.nativeElement.value);*/
     if (this.submitForm.value.ingredientName && this.submitForm.value.ingredientQuantity) {
@@ -40,32 +45,26 @@ export class ShoppingEditComponent implements OnInit, OnDestroy {
       if (this.editing) {
         if (ingredient.name.length > 0 && ingredient.quantity > 0) {
           this.ingredientService.editIngredient(this.editingSelected, ingredient);
-          this.submitForm.reset();
           this.editing = false;
         }
       } else {
         if (ingredient.name.length > 0 && ingredient.quantity > 0) {
           this.ingredientService.addIngredient(ingredient);
-          this.submitForm.reset();
         }
       }
+      this.onClearInputs();
     }
   }
   onDeleteSelectedItem = () => {
     if (Number.isInteger(this.editingSelected)) {
       this.ingredientService.deleteIngredient(+this.editingSelected);
-      this.editingSelected = null;
-      this.submitForm.reset();
+      this.onClearInputs();
     }
-  };
+  }
   onClearInputs = () => {
     this.editingSelected = null;
     this.editing = false;
     this.editingIngredient = null;
     this.submitForm.reset();
-  }
-
-  ngOnDestroy(): void {
-    this.ingredientSubscription.unsubscribe();
   }
 }

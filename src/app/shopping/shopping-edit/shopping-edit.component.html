@@ -40,13 +40,25 @@
 
   <div class="field is-grouped">
     <div class="control">
-      <button class="button is-success" type="submit" [disabled]="!f.valid">Add</button>
+      <button
+        class="button is-success"
+        type="submit"
+        [disabled]="!f.valid"
+      >{{ editing ? 'Edit' : 'Add' }}</button>
     </div>
     <div class="control">
-      <button class="button is-danger" (click)="onDeleteSelectedItem()" [disabled]="!editingSelected">Delete</button>
+      <button
+        class="button is-danger"
+        *ngIf="editing"
+        (click)="onDeleteSelectedItem()"
+        [disabled]="!editingSelected"
+      >Delete</button>
     </div>
     <div class="control">
-      <button class="button is-link" (click)="onClearInputs()">Clear</button>
+      <button
+        class="button is-link"
+        (click)="onClearInputs()"
+      >Clear</button>
     </div>
   </div>
 </form>
