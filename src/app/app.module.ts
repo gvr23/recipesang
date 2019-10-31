@@ -16,6 +16,8 @@ import {FormsModule, ReactiveFormsModule} from '@angular/forms';
 import {IngredientService} from './shared/services/ingredient.service';
 import {RecipeService} from './shared/services/recipe.service';
 import {DropDirective} from './shared/directives/drop.directive';
+import {HttpClientModule} from '@angular/common/http';
+import {StorageService} from './shared/services/external/storage.service';
 
 @NgModule({
   declarations: [
@@ -35,9 +37,10 @@ import {DropDirective} from './shared/directives/drop.directive';
     BrowserModule,
     AppRoutes,
     FormsModule,
-    ReactiveFormsModule
+    ReactiveFormsModule,
+    HttpClientModule
   ],
-  providers: [IngredientService, RecipeService],
+  providers: [IngredientService, RecipeService, StorageService],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

@@ -1,15 +1,19 @@
-import { Component, OnInit } from '@angular/core';
+import {Component, OnDestroy, OnInit} from '@angular/core';
+import {StorageService} from '../shared/services/external/storage.service';
+import {Subscription} from 'rxjs';
 
 @Component({
   selector: 'app-header',
   templateUrl: './header.component.html',
   styleUrls: ['./header.component.css']
 })
-export class HeaderComponent implements OnInit {
+export class HeaderComponent implements OnInit, OnDestroy {
+  fetchSubscription: Subscription;
 
-  constructor() { }
+  constructor(private storageService: StorageService) { }
 
-  ngOnInit() {
-  }
-
+  ngOnInit() {}
+  ngOnDestroy(): void { this.fetchSubscription.unsubscribe(); }
+  onSaveRecipes = () => this.storageService.storeRecipes();
+  onFetchRecipes = () => this.fetchSubscription = this.storageService.fetchRecipes().subscribe();
 }

@@ -9,7 +9,7 @@ import {IngredientService} from './ingredient.service';
 })
 export class RecipeService {
   public getRecipesEmitter = new Subject<Recipe[]>();
-  private recipes: Recipe[] = [
+ /* private recipes: Recipe[] = [
     new Recipe(
       'A test recipe',
       'This is simply a test',
@@ -30,10 +30,15 @@ export class RecipeService {
       ],
       'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRs2dWrnSQCaOu5jV5iDHTQbjHKAq4LjsV97-EVHyk381SALkdbpQ',
     )
-  ];
+  ];*/
+  private recipes: Recipe[] = [];
 
   constructor(private ingredientService: IngredientService) {}
 
+  addRecipes = (recipes: Recipe[]) => {
+    this.recipes = [...recipes];
+    this.getRecipesEmitter.next(this.getRecipes());
+  }
   getRecipes = () => this.recipes.slice();
   getRecipe = (index: number) => this.recipes[index];
   addRecipe = (recipe: Recipe) => {

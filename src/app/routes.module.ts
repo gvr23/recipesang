@@ -5,6 +5,7 @@ import {RecipeStartComponent} from './recipes/recipe-start/recipe-start.componen
 import {RecipeEditComponent} from './recipes/recipe-edit/recipe-edit.component';
 import {ShoppingComponent} from './shopping/shopping.component';
 import {RecipeDetailComponent} from './recipes/recipe-detail/recipe-detail.component';
+import {RecipeResolver} from './shared/guards/recipe-resolver.guard';
 
 const routes: Routes = [
   {path: '', redirectTo: '/recipes', pathMatch: 'full'},
@@ -12,8 +13,8 @@ const routes: Routes = [
     path: 'recipes', component: RecipesComponent, children: [
       {path: '', component: RecipeStartComponent},
       {path: 'new', component: RecipeEditComponent},
-      {path: ':id', component: RecipeDetailComponent},
-      {path: ':id/edit', component: RecipeEditComponent}
+      {path: ':id', component: RecipeDetailComponent, resolve: [RecipeResolver]},
+      {path: ':id/edit', component: RecipeEditComponent, resolve: [RecipeResolver]}
     ]
   },
   {path: 'shopping', component: ShoppingComponent}
@@ -23,4 +24,5 @@ const routes: Routes = [
   imports: [RouterModule.forRoot(routes)],
   exports: [RouterModule]
 })
-export class AppRoutes {}
+export class AppRoutes {
+}
