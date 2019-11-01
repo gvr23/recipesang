@@ -12,7 +12,7 @@ export class RecipeResolver implements Resolve<Recipe[]> {
 
   resolve(route: ActivatedRouteSnapshot, state: RouterStateSnapshot): Observable<Recipe[]> | Promise<Recipe[]> | Recipe[] {
     const recipes = this.recipeService.getRecipes();
-    if (recipes.length === 0){
+    if (recipes.length === 0) {
       return this.storageService.fetchRecipes();
     }
     return recipes;

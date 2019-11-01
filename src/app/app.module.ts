@@ -16,8 +16,12 @@ import {FormsModule, ReactiveFormsModule} from '@angular/forms';
 import {IngredientService} from './shared/services/ingredient.service';
 import {RecipeService} from './shared/services/recipe.service';
 import {DropDirective} from './shared/directives/drop.directive';
-import {HttpClientModule} from '@angular/common/http';
+import {HTTP_INTERCEPTORS, HttpClientModule} from '@angular/common/http';
 import {StorageService} from './shared/services/external/storage.service';
+import { AuthComponent } from './auth/auth.component';
+import {AuthService} from './shared/services/external/auth.service';
+import {AuthInterceptorService} from './shared/services/interceptors/auth-interceptor.service';
+
 
 @NgModule({
   declarations: [
@@ -31,7 +35,8 @@ import {StorageService} from './shared/services/external/storage.service';
     RecipeStartComponent,
     RecipeEditComponent,
     RecipeItemComponent,
-    DropDirective
+    DropDirective,
+    AuthComponent
   ],
   imports: [
     BrowserModule,
@@ -40,7 +45,8 @@ import {StorageService} from './shared/services/external/storage.service';
     ReactiveFormsModule,
     HttpClientModule
   ],
-  providers: [IngredientService, RecipeService, StorageService],
+  // tslint:disable-next-line:max-line-length
+  providers: [IngredientService, RecipeService, StorageService, AuthService, { provide: HTTP_INTERCEPTORS, useClass: AuthInterceptorService, multi: true }],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

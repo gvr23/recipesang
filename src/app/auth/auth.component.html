@@ -1,0 +1,68 @@
+<section class="section">
+  <div class="container is-centered">
+    <div class="columns is-centered">
+      <div class="column is-one-third" id="form">
+        <form #f="ngForm" (ngSubmit)="onSubmit()">
+          <div class="field">
+            <label class="label">Email</label>
+            <div class="control">
+              <input
+                ngModel
+                name="email"
+                email
+                required
+                type="email"
+                class="input"
+                [disabled]="isLoading"
+              />
+            </div>
+          </div>
+
+          <div class="field">
+            <label class="label">Password</label>
+            <div class="control">
+              <input
+                ngModel
+                name="password"
+                required
+                type="password"
+                class="input"
+                [disabled]="isLoading"
+              />
+            </div>
+          </div>
+
+          <div class="field is-grouped">
+            <div class="control">
+              <button
+                class="button is-primary"
+                type="submit"
+                [disabled]="!f.valid"
+                [class.is-loading]="isLoading"
+              >Sign {{ loginMode ? 'in' : 'up' }}</button>
+            </div>
+            <div class="control">
+              <button
+                class="button is-link"
+                type="button"
+                (click)="onSwitchMode()"
+              >Switch to {{ loginMode ? 'Sign up' : 'Sign in' }}</button>
+            </div>
+          </div>
+
+        </form>
+      </div>
+    </div>
+
+    <div class="columns is-centered" *ngIf="error">
+      <div class="column is-one-third" style="margin-top: 2%; padding-left: 0; padding-right: 0">
+        <article class="message is-danger">
+          <div class="message-body">
+            {{ error }}
+          </div>
+        </article>
+      </div>
+    </div>
+
+  </div>
+</section>

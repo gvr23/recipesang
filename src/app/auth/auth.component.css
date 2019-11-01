@@ -1,0 +1,16 @@
+#form {
+  background-color: rgba(0,0,0,0.05);
+  border-radius: 1%;
+}
+.section {
+  position: absolute;
+  bottom: 0;
+  top: 0;
+  left: 0;
+  right: 0;
+  margin: auto;
+  height: 60vh;
+}
+input.ng-invalid.ng-touched {
+  border: solid 1px red;
+}

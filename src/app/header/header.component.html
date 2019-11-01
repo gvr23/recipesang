@@ -1,17 +1,21 @@
 <nav class="navbar is-dark">
   <div class="navbar-brand">
     <div class="navbar-item">
-      <p [routerLink]="['recipes']" class="title" style="color: #00D1B2; outline: none; cursor: pointer">Recipe</p>
+      <p class="title" style="color: #00D1B2; outline: none;">Recipe</p>
     </div>
   </div>
 
   <div class="navbar-menu">
     <div class="navbar-start">
-      <a class="navbar-item" [routerLink]="['recipes']">Recipes</a>
+      <a *ngIf="!isAuthenticated" class="navbar-item" [routerLink]="['auth']">Authentication</a>
+      <a *ngIf="isAuthenticated" class="navbar-item" [routerLink]="['recipes']">Recipes</a>
       <a class="navbar-item" [routerLink]="['shopping']">Shopping List</a>
     </div>
     <div class="navbar-end">
-      <div class="navbar-item has-dropdown is-hoverable">
+      <div *ngIf="isAuthenticated" class="navbar-item">
+        <button class="button is-danger" type="button" (click)="onSignOut()">Log out</button>
+      </div>
+      <div *ngIf="isAuthenticated" class="navbar-item has-dropdown is-hoverable">
         <a class="navbar-link">Manage</a>
 
         <div class="navbar-dropdown">
