@@ -1,8 +1,8 @@
 import {Component, OnInit} from '@angular/core';
 import {FormArray, FormControl, FormGroup, Validators} from '@angular/forms';
-import {Recipe} from '../../shared/models/recipe.model';
-import {Ingredient} from '../../shared/models/ingredient.model';
-import {RecipeService} from '../../shared/services/recipe.service';
+import {Recipe} from '../../../shared/models/recipe.model';
+import {Ingredient} from '../../../shared/models/ingredient.model';
+import {RecipeService} from '../../../shared/services/recipe.service';
 import {ActivatedRoute, Params, Router} from '@angular/router';
 
 @Component({

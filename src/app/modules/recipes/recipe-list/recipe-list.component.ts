@@ -1,6 +1,6 @@
 import {Component, OnDestroy, OnInit} from '@angular/core';
-import {RecipeService} from '../../shared/services/recipe.service';
-import {Recipe} from '../../shared/models/recipe.model';
+import {RecipeService} from '../../../shared/services/recipe.service';
+import {Recipe} from '../../../shared/models/recipe.model';
 import {Subscription} from 'rxjs';
 
 @Component({
