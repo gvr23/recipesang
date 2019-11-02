@@ -10,7 +10,7 @@ import {AuthComponent} from './auth/auth.component';
 import {AuthGuard} from './shared/guards/auth-guard.service';
 
 const routes: Routes = [
-  {path: '', redirectTo: '/recipes', pathMatch: 'full'},
+  {path: '', redirectTo: '/auth', pathMatch: 'full'},
   {
     path: 'recipes', canActivateChild: [AuthGuard], component: RecipesComponent, children: [
       {path: '', component: RecipeStartComponent},

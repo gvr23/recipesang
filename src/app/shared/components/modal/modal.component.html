@@ -1,0 +1,7 @@
+<div class="modal" [ngClass]="message ? 'is-active' : ''">
+  <div class="modal-background"></div>
+  <div class="modal-content notification is-danger has-text-centered">
+    <p class="subtitle is-size-4">{{ message }}</p>
+  </div>
+  <button class="modal-close is-large" aria-label="close" (click)="onClose()"></button>
+</div>

@@ -21,6 +21,8 @@ import {StorageService} from './shared/services/external/storage.service';
 import { AuthComponent } from './auth/auth.component';
 import {AuthService} from './shared/services/external/auth.service';
 import {AuthInterceptorService} from './shared/services/interceptors/auth-interceptor.service';
+import { ModalComponent } from './shared/components/modal/modal.component';
+import { PlaceholderDirective } from './shared/directives/placeholder.directive';
 
 
 @NgModule({
@@ -36,7 +38,9 @@ import {AuthInterceptorService} from './shared/services/interceptors/auth-interc
     RecipeEditComponent,
     RecipeItemComponent,
     DropDirective,
-    AuthComponent
+    AuthComponent,
+    PlaceholderDirective,
+    ModalComponent
   ],
   imports: [
     BrowserModule,
@@ -47,6 +51,7 @@ import {AuthInterceptorService} from './shared/services/interceptors/auth-interc
   ],
   // tslint:disable-next-line:max-line-length
   providers: [IngredientService, RecipeService, StorageService, AuthService, { provide: HTTP_INTERCEPTORS, useClass: AuthInterceptorService, multi: true }],
-  bootstrap: [AppComponent]
+  bootstrap: [AppComponent],
+  entryComponents: [ModalComponent]
 })
 export class AppModule { }

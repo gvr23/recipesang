@@ -2,21 +2,31 @@ import {ActivatedRouteSnapshot, CanActivate, CanActivateChild, Router, RouterSta
 import {Observable, Subscription} from 'rxjs';
 import {AuthService} from '../services/external/auth.service';
 import {Injectable} from '@angular/core';
+import {map, take} from 'rxjs/operators';
 
 @Injectable({providedIn: 'root'})
 export class AuthGuard implements CanActivate, CanActivateChild {
   isLogged = false;
 
-  constructor(private authService: AuthService) {}
+  constructor(private authService: AuthService, private router: Router) {}
 
   // tslint:disable-next-line:max-line-length
   canActivate(route: ActivatedRouteSnapshot, state: RouterStateSnapshot): Observable<boolean | UrlTree> | Promise<boolean | UrlTree> | boolean | UrlTree {
-    return new Promise((resolve, reject) => {
+    /*return new Promise((resolve, reject) => {
       this.authService.user.subscribe((user) => {
         this.isLogged = !!user;
         resolve(this.isLogged);
       });
-    });
+    });*/
+    return this.authService.user.pipe(
+      take(1),
+      map(user => {
+      const isAuth = !!user;
+      if (isAuth) {
+        return true;
+      }
+      return this.router.createUrlTree(['/auth']);
+    }));
   }
 
   // tslint:disable-next-line:max-line-length

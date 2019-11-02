@@ -54,15 +54,8 @@
       </div>
     </div>
 
-    <div class="columns is-centered" *ngIf="error">
-      <div class="column is-one-third" style="margin-top: 2%; padding-left: 0; padding-right: 0">
-        <article class="message is-danger">
-          <div class="message-body">
-            {{ error }}
-          </div>
-        </article>
-      </div>
-    </div>
+    <!--<app-modal *ngIf="error" [message]="error"></app-modal>-->
+    <ng-template appPlaceholder></ng-template>
 
   </div>
 </section>
