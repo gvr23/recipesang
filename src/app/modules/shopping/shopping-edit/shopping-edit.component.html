@@ -51,7 +51,7 @@
         class="button is-danger"
         *ngIf="editing"
         (click)="onDeleteSelectedItem()"
-        [disabled]="!editingSelected"
+        [disabled]="editingSelected === null"
       >Delete</button>
     </div>
     <div class="control">

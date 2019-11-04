@@ -13,6 +13,7 @@ export class HeaderComponent implements OnInit, OnDestroy {
   isAuthenticated = false;
   fetchSubscription: Subscription;
   fetchUserSubscription: Subscription;
+  toggle = false;
 
   constructor(private storageService: StorageService, private authService: AuthService) {
   }
@@ -26,10 +27,20 @@ export class HeaderComponent implements OnInit, OnDestroy {
     this.fetchUserSubscription.unsubscribe();
   }
 
-  onSaveRecipes = () => this.storageService.storeRecipes();
-  onFetchRecipes = () => this.fetchSubscription = this.storageService.fetchRecipes().subscribe();
+  onSaveRecipes = () => {
+    this.storageService.storeRecipes();
+    this.toggle = false;
+  }
+  onFetchRecipes = () => {
+    this.fetchSubscription = this.storageService.fetchRecipes().subscribe();
+    this.toggle = false;
+  }
   onSignOut = () => {
     this.isAuthenticated = false;
+    this.toggle = false;
     this.authService.logout();
+  }
+  onShowBurger = () => {
+    this.toggle = !this.toggle;
   }
 }

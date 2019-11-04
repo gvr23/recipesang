@@ -3,13 +3,19 @@
     <div class="navbar-item">
       <p class="title" style="color: #00D1B2; outline: none;">Recipe</p>
     </div>
+
+    <a role="button" class="navbar-burger burger" [ngClass]="toggle ? 'is-active' : ''" (click)="onShowBurger()" aria-label="menu" aria-expanded="false" data-target="navbarBasicExample">
+      <span aria-hidden="true"></span>
+      <span aria-hidden="true"></span>
+      <span aria-hidden="true"></span>
+    </a>
   </div>
 
-  <div class="navbar-menu">
+  <div class="navbar-menu" [ngClass]="toggle ? 'is-active' : ''">
     <div class="navbar-start">
-      <a *ngIf="!isAuthenticated" class="navbar-item" [routerLink]="['auth']">Authentication</a>
-      <a *ngIf="isAuthenticated" class="navbar-item" [routerLink]="['recipes']">Recipes</a>
-      <a class="navbar-item" [routerLink]="['shopping']">Shopping List</a>
+      <a *ngIf="!isAuthenticated" class="navbar-item" (click)="toggle = false" [routerLink]="['auth']">Authentication</a>
+      <a *ngIf="isAuthenticated" class="navbar-item" (click)="toggle = false" [routerLink]="['recipes']">Recipes</a>
+      <a class="navbar-item" [routerLink]="['shopping']" (click)="toggle = false">Shopping List</a>
     </div>
     <div class="navbar-end">
       <div *ngIf="isAuthenticated" class="navbar-item">

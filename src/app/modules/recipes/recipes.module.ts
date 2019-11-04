@@ -23,6 +23,9 @@ import {DropDirective} from '../../shared/directives/drop.directive';
     RecipeItemComponent,
     DropDirective
   ],
+  exports: [
+    DropDirective
+  ],
   imports: [
     CommonModule,
     ReactiveFormsModule,

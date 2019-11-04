@@ -6,6 +6,8 @@ import {BehaviorSubject, Subject, throwError} from 'rxjs';
 import {User} from '../../models/user.model';
 import {Router} from '@angular/router';
 
+import { environment } from '../../../../environments/environment';
+
 @Injectable({
   providedIn: 'root'
 })
@@ -18,23 +20,29 @@ export class AuthService {
 
   signUP = (email: string, password: string) => {
     return this.http.post<AuthInterface>(
-      'https://identitytoolkit.googleapis.com/v1/accounts:signUp?key=AIzaSyAL3RPGv4v1LUtzXpAXjmBgYQYlUBcTzHg',
+      `https://identitytoolkit.googleapis.com/v1/accounts:signUp?key=${environment.firebaseApiKey}`,
       {
         email,
         password,
         returnSecureToken: true
       }
-    ).pipe(catchError(this.handleError), tap((data) => this.handleAuthentication(data.email, data.localId, data.idToken, data.expiresIn)));
+    ).pipe(
+      catchError(this.handleError),
+      tap((data) => this.handleAuthentication(data.email, data.localId, data.idToken, data.expiresIn))
+    );
   }
   login = (email: string, password: string) => {
     return this.http.post<AuthInterface>(
-      'https://identitytoolkit.googleapis.com/v1/accounts:signInWithPassword?key=AIzaSyAL3RPGv4v1LUtzXpAXjmBgYQYlUBcTzHg',
+      `https://identitytoolkit.googleapis.com/v1/accounts:signInWithPassword?key=${environment.firebaseApiKey}`,
       {
         email,
         password,
         returnSecureToken: true
       }
-    ).pipe(catchError(this.handleError), tap((data) => this.handleAuthentication(data.email, data.localId, data.idToken, data.expiresIn)));
+    ).pipe(
+      catchError(this.handleError),
+      tap((data) => this.handleAuthentication(data.email, data.localId, data.idToken, data.expiresIn))
+    );
   }
   autoLogin = () => {
     const userData: {
@@ -83,6 +91,7 @@ export class AuthService {
     if (!response.error || !response.error.error) {
       return throwError(errorMessage);
     }
+    console.log(response);
     switch (response.error.error.message) {
       case 'EMAIL_EXISTS':
         errorMessage = 'This email already exists';

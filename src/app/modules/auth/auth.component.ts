@@ -1,11 +1,11 @@
 import {Component, ComponentFactoryResolver, OnDestroy, OnInit, ViewChild} from '@angular/core';
 import {NgForm} from '@angular/forms';
-import {AuthService} from '../shared/services/external/auth.service';
+import {AuthService} from '../../shared/services/external/auth.service';
 import {Observable, Subscription} from 'rxjs';
-import {AuthInterface} from '../shared/interfaces/response/auth.interface';
+import {AuthInterface} from '../../shared/interfaces/response/auth.interface';
 import {Router} from '@angular/router';
-import {PlaceholderDirective} from '../shared/directives/placeholder.directive';
-import {ModalComponent} from '../shared/components/modal/modal.component';
+import {PlaceholderDirective} from '../../shared/directives/placeholder.directive';
+import {ModalComponent} from '../../shared/components/modal/modal.component';
 
 @Component({
   selector: 'app-auth',

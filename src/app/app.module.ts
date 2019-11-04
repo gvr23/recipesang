@@ -1,44 +1,33 @@
 import { BrowserModule } from '@angular/platform-browser';
-import {FormsModule} from '@angular/forms';
 import { NgModule } from '@angular/core';
-import {HTTP_INTERCEPTORS, HttpClientModule} from '@angular/common/http';
+import {HTTP_INTERCEPTORS} from '@angular/common/http';
 
 import {AppRoutes} from './routes.module';
-import {RecipesModule} from './modules/recipes/recipes.module';
-import {ShoppingModule} from './modules/shopping/shopping.module';
+import {AuthModule} from './modules/auth/auth.module';
 
 import { AppComponent } from './app.component';
 import { HeaderComponent } from './header/header.component';
-import { AuthComponent } from './auth/auth.component';
 import { ModalComponent } from './shared/components/modal/modal.component';
 
-import {IngredientService} from './shared/services/ingredient.service';
-import {RecipeService} from './shared/services/recipe.service';
-import {StorageService} from './shared/services/external/storage.service';
 import {AuthService} from './shared/services/external/auth.service';
 import {AuthInterceptorService} from './shared/services/interceptors/auth-interceptor.service';
-
-import { PlaceholderDirective } from './shared/directives/placeholder.directive';
-
+import {StoreModule} from '@ngrx/store';
+import {AppReducers} from './reducers/app.reducers';
 
 @NgModule({
   declarations: [
     AppComponent,
     HeaderComponent,
-    AuthComponent,
-    PlaceholderDirective,
     ModalComponent
   ],
   imports: [
+    StoreModule.forRoot(AppReducers),
     BrowserModule,
     AppRoutes,
-    FormsModule,
-    HttpClientModule,
-    RecipesModule,
-    ShoppingModule
+    AuthModule
   ],
   // tslint:disable-next-line:max-line-length
-  providers: [IngredientService, RecipeService, StorageService, AuthService, { provide: HTTP_INTERCEPTORS, useClass: AuthInterceptorService, multi: true }],
+  providers: [AuthService, { provide: HTTP_INTERCEPTORS, useClass: AuthInterceptorService, multi: true }],
   bootstrap: [AppComponent],
   entryComponents: [ModalComponent]
 })

@@ -1,8 +1,8 @@
 import {Ingredient} from '../models/ingredient.model';
-import {EventEmitter} from '@angular/core';
+import {EventEmitter, Injectable} from '@angular/core';
 import {Subject} from 'rxjs';
 
-
+@Injectable({ providedIn: 'root' })
 export class IngredientService {
   private ingredients: Ingredient[] = [
     new Ingredient('Apple', 5),
