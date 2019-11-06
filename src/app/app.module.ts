@@ -17,6 +17,7 @@ import {AuthInterceptorService} from './shared/services/interceptors/auth-interc
 
 import * as fromApp from './reducers/app.reducers';
 import {AuthEffects} from './effects/auth.effects';
+import {RecipesEffects} from './effects/recipes.effects';
 import {StoreDevtoolsModule} from '@ngrx/store-devtools';
 import {environment} from '../environments/environment';
 
@@ -29,7 +30,7 @@ import {environment} from '../environments/environment';
   imports: [
     StoreModule.forRoot(fromApp.AppReducers),
     StoreDevtoolsModule.instrument({logOnly: environment.production}),
-    EffectsModule.forRoot([AuthEffects]),
+    EffectsModule.forRoot([AuthEffects, RecipesEffects]),
     BrowserModule,
     AppRoutes,
     AuthModule

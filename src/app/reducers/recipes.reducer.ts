@@ -3,13 +3,11 @@ import * as RecipesActions from '../actions/recipes.actions';
 
 export interface RecipesState {
   recipes: Recipe[];
-  selectedRecipeIndex: number;
 }
 
 const INITIAL_STATE: RecipesState = {
-  recipes: null,
-  selectedRecipeIndex: -1
-}
+  recipes: null
+};
 
 export function RecipesReducer(state = INITIAL_STATE, action: RecipesActions.RecipesActions) {
   switch (action.type) {
@@ -19,13 +17,21 @@ export function RecipesReducer(state = INITIAL_STATE, action: RecipesActions.Rec
         recipes: [...action.payload]
       };
     case RecipesActions.ADD_RECIPE:
-      return {
-        ...state,
-        recipes: [...state.recipes, action.payload]
-      };
+      if (state.recipes) {
+        return {
+          ...state,
+          recipes: [...state.recipes, action.payload]
+        };
+      } else {
+        return {
+          ...state,
+          recipes: [action.payload]
+        };
+      }
     case RecipesActions.UPDATE_RECIPE:
+      const updatedRecipe = {...state.recipes[action.payload.index], ...action.payload.recipe};
       const updatedRecipes = [...state.recipes];
-      updatedRecipes[state.selectedRecipeIndex] = action.payload;
+      updatedRecipes[action.payload.index] = updatedRecipe;
       return {
         ...state,
         recipes: updatedRecipes

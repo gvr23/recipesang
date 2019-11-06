@@ -3,10 +3,10 @@ import {Subscription} from 'rxjs';
 import {map} from 'rxjs/operators';
 import {Store} from '@ngrx/store';
 
-import {StorageService} from '../shared/services/external/storage.service';
 import {AuthService} from '../shared/services/external/auth.service';
 import * as fromApp from '../reducers/app.reducers';
 import * as AuthActions from '../actions/auth.actions';
+import * as RecipeActions from '../actions/recipes.actions';
 
 @Component({
   selector: 'app-header',
@@ -19,7 +19,7 @@ export class HeaderComponent implements OnInit, OnDestroy {
   fetchUserSubscription: Subscription;
   toggle = false;
 
-  constructor(private storageService: StorageService, private authService: AuthService, private store: Store<fromApp.AppState>) {
+  constructor(private authService: AuthService, private store: Store<fromApp.AppState>) {
   }
 
   ngOnInit() {
@@ -34,11 +34,13 @@ export class HeaderComponent implements OnInit, OnDestroy {
   }
 
   onSaveRecipes = () => {
-    this.storageService.storeRecipes();
+    /*this.storageService.storeRecipes();*/
+    this.store.dispatch(new RecipeActions.StoreRecipes());
     this.toggle = false;
   }
   onFetchRecipes = () => {
-    this.fetchSubscription = this.storageService.fetchRecipes().subscribe();
+    /*this.fetchSubscription = this.storageService.fetchRecipes().subscribe();*/
+    this.store.dispatch(new RecipeActions.FetchRecipes());
     this.toggle = false;
   }
   onSignOut = () => {

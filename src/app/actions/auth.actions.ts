@@ -15,7 +15,7 @@ export class SignupStart implements Action {
 export const AUTHENTICATE_SUCCESS = '[Auth Reducer] Login';
 export class AuthenticateSuccess implements Action {
   readonly type = AUTHENTICATE_SUCCESS;
-  constructor(public payload: User) {}
+  constructor(public payload: {user: User, redirect: boolean}) {}
 }
 export const AUTHENTICATE_FAIL = '[Auth Reducer] Login Fail';
 export class AuthenticateFail implements Action {
