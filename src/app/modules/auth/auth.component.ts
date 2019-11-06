@@ -6,6 +6,9 @@ import {AuthInterface} from '../../shared/interfaces/response/auth.interface';
 import {Router} from '@angular/router';
 import {PlaceholderDirective} from '../../shared/directives/placeholder.directive';
 import {ModalComponent} from '../../shared/components/modal/modal.component';
+import {Store} from '@ngrx/store';
+import * as fromApp from '../../reducers/app.reducers';
+import * as AuthActions from '../../actions/auth.actions';
 
 @Component({
   selector: 'app-auth',
@@ -15,7 +18,7 @@ import {ModalComponent} from '../../shared/components/modal/modal.component';
 export class AuthComponent implements OnInit, OnDestroy {
   @ViewChild('f', {static: false}) loginForm: NgForm;
   @ViewChild(PlaceholderDirective, { static: false }) placeHolder: PlaceholderDirective;
-  signUpSubscription: Observable<AuthInterface>;
+  storeSub: Subscription;
   loginMode = false;
   isLoading = false;
   error: string = null;
@@ -23,24 +26,30 @@ export class AuthComponent implements OnInit, OnDestroy {
   constructor(
     private authService: AuthService,
     private router: Router,
+    private store: Store<fromApp.AppState>,
     private factoryResolver: ComponentFactoryResolver
   ) {}
 
   ngOnInit() {
+     this.storeSub = this.store.select('AuthReducer').subscribe(authState => {
+       this.isLoading = authState.loading;
+       this.error = authState.loginErrorMessage;
+       if (this.error) {this.onShowError(this.error);}
+    });
   }
 
-  ngOnDestroy(): void {  }
+  ngOnDestroy(): void { this.storeSub.unsubscribe(); }
 
   onSubmit = () => {
-    this.error = null;
-    this.isLoading = true;
     const value = this.loginForm.value;
     if (!this.loginMode) {
-      this.signUpSubscription = this.authService.signUP(value.email, value.password);
+      /*this.signUpSubscription = this.authService.signUP(value.email, value.password);*/
+      this.store.dispatch(new AuthActions.SignupStart({email: value.email, password: value.password}));
     } else {
-      this.signUpSubscription = this.authService.login(value.email, value.password);
+      /*this.signUpSubscription = this.authService.login(value.email, value.password);*/
+      this.store.dispatch(new AuthActions.LoginStart({email: value.email, password: value.password}));
     }
-    this.signUpSubscription.subscribe(
+   /* this.signUpSubscription.subscribe(
       success => {
         this.isLoading = false;
         this.router.navigate(['/recipes']);
@@ -49,7 +58,7 @@ export class AuthComponent implements OnInit, OnDestroy {
         this.error = error;
         this.isLoading = false;
         this.onShowError(this.error);
-      });
+      });*/
     this.loginForm.reset();
   }
   onSwitchMode = () => this.loginMode = !this.loginMode;

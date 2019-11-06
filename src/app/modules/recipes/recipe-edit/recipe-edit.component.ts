@@ -1,9 +1,11 @@
 import {Component, OnInit} from '@angular/core';
 import {FormArray, FormControl, FormGroup, Validators} from '@angular/forms';
 import {Recipe} from '../../../shared/models/recipe.model';
-import {Ingredient} from '../../../shared/models/ingredient.model';
 import {RecipeService} from '../../../shared/services/recipe.service';
 import {ActivatedRoute, Params, Router} from '@angular/router';
+import {Store} from '@ngrx/store';
+import * as fromApp from '../../../reducers/app.reducers';
+import {map, switchMap} from 'rxjs/operators';
 
 @Component({
   selector: 'app-recipe-edit',
@@ -15,26 +17,36 @@ export class RecipeEditComponent implements OnInit {
   id: number;
   editMode = false;
 
-  constructor(private router: Router, private route: ActivatedRoute, private recipeService: RecipeService) {
+  constructor(
+    private router: Router,
+    private route: ActivatedRoute,
+    private recipeService: RecipeService,
+    private store: Store<fromApp.AppState>
+  ) {
   }
 
   ngOnInit() {
-    this.route.params.subscribe((params: Params) => {
-      this.id = +params.id;
-      console.log('the id of editing is, ', this.id);
-      this.editMode = params.id != null;
-      this.initForm(this.editMode);
+    this.route.params.pipe(
+      map(params => +params.id),
+      switchMap(id => {
+        this.id = id;
+        this.editMode = id != null;
+        return this.store.select('RecipesReducer');
+      }),
+      map(recipeState => recipeState.recipes.find((item, index) => index === this.id))
+    ).subscribe(recipe => {
+      this.initForm(this.editMode, recipe);
     });
   }
 
-  private initForm = (editing: boolean) => {
+  private initForm = (editing: boolean, editingRecipe: Recipe) => {
     let recipeName = '';
     let recipeImagePath = '';
     let recipeDescription = '';
     const recipeIngredients = new FormArray([]);
 
     if (editing) {
-      const editingRecipe = this.recipeService.getRecipe(this.id);
+      /*const editingRecipe = this.recipeService.getRecipe(this.id);*/
       recipeName = editingRecipe.name;
       recipeImagePath = editingRecipe.imagePath;
       recipeDescription = editingRecipe.description;

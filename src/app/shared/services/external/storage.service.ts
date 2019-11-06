@@ -3,13 +3,18 @@ import {HttpClient} from '@angular/common/http';
 import {RecipeService} from '../recipe.service';
 import {Recipe} from '../../models/recipe.model';
 import {map, tap} from 'rxjs/operators';
-import {Ingredient} from '../../models/ingredient.model';
+import {Store} from '@ngrx/store';
+import * as fromApp from '../../../reducers/app.reducers';
+import * as RecipesActions from '../../../actions/recipes.actions';
 
 @Injectable({providedIn: 'root'})
 export class StorageService {
   private API_URL = 'https://ng-course-recipe-book-4c83a.firebaseio.com/recipes.json';
 
-  constructor(private http: HttpClient, private recipeService: RecipeService) {
+  constructor(
+    private http: HttpClient,
+    private recipeService: RecipeService,
+    private store: Store<fromApp.AppState>) {
   }
 
   storeRecipes = () => {
@@ -29,7 +34,10 @@ export class StorageService {
           return {...recipe, ingredients: recipe.ingredients ? recipe.ingredients : []};
         });
       }),
-      tap(response => this.recipeService.addRecipes(response))
+      tap(response => {
+        /*this.recipeService.addRecipes(response);*/
+        this.store.dispatch(new RecipesActions.AddRecipes(response));
+      })
     );
   }
 }
